@@ -59,6 +59,6 @@ void bstkljuc::push (const string& el,int id)
   else
     prevNode->_left = newnd;
   ++_size;
-  return &(newnd->info);
+
 }
 */
