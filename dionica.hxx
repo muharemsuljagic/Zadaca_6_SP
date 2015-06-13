@@ -11,8 +11,8 @@ class Dionica
 	std::string _Sifra;
 	std::string _Naziv;
 	double _Cijena;
-	double _Ukupno;
-	double _Preostalo;
+	int _Ukupno;
+	int _Preostalo;
 
 	public:
 	
@@ -23,38 +23,47 @@ class Dionica
 	void setNaziv( const std::string& naziv) { _Naziv = naziv;}
 	void setCijena( double cijena) { _Cijena = cijena ; }
 	
-	double getUkupno() { return _Ukupno;}
-	double getPreostalo() { return _Preostalo;}	
-	int getId() { return _ID; }
-	const std::string getSifra() { return _Sifra;}
-	const std::string getNaziv() { return _Naziv;}
-	double getCijena() { return _Cijena;}
+	int getUkupno()const{ return _Ukupno;}
+	int getPreostalo()const { return _Preostalo;}	
+	int getId()const{ return _ID; }
+	const std::string getSifra()const{ return _Sifra;}
+	const std::string getNaziv()const{ return _Naziv;}
+	double getCijena() const{ return _Cijena;}
 	
 	Dionica() = default;
-	Dionica(int Id,const std::string& Sifra,const std::string& Naziv,double Cijena,double Ukupno):_ID(Id),_Sifra(Sifra),_Naziv(Naziv),_Cijena(Cijena),_Ukupno(Ukupno)
+	Dionica(int Id,const std::string& Sifra,const std::string& Naziv,double Cijena,int Ukupno):_ID(Id),_Sifra(Sifra),_Naziv(Naziv),_Cijena(Cijena),_Ukupno(Ukupno)
 	{
 		_Preostalo = Ukupno;
 	}
 	
 	~Dionica()= default;
 
-	bool operator >( const Dionica& b)
+	bool operator <( const Dionica& b)const
+	{
+		return _ID < b._ID;
+	}
+	bool operator >( const Dionica& b)const
 	{
 		return _ID > b._ID;
 	}
 
-	bool operator == ( const Dionica& b)
+	bool operator == ( const Dionica& b)const
 	{
 		return( _ID == b._ID && _Sifra == b._Sifra && _Naziv == b._Naziv && _Cijena== b._Cijena ) ;
 	}
 
 
-	bool operator != ( const Dionica& b)
+	bool operator != ( const Dionica& b)const
 	{
 		return( _ID != b._ID ||  _Sifra != b._Sifra || _Naziv != b._Naziv || _Cijena != b._Cijena ) ;
 
 	}
 	
+  friend std::ostream& operator << (std::ostream& o, const Dionica& d)
+  {
+    o<<d._ID<<","<<d._Sifra<<","<<d._Naziv<<","<<d._Cijena<<","<<d._Ukupno<<","<<d._Preostalo<<"\n";
+    return o;
+  }
 };
 
 
