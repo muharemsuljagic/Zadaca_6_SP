@@ -23,25 +23,25 @@ class Kljuc
 	void ispisiId() const;
 	void dodajId(int);
 	
-	 bool operator > ( const Kljuc& b) const 
+	 bool operator > ( const Kljuc<T>& b) const 
 	 {
 	   return _kljuc > b._kljuc;
 	   
 	 }
 	
-	  bool operator < ( const Kljuc& b) const 
+	  bool operator < ( const Kljuc<T>& b) const 
 	 {
 	   return _kljuc < b._kljuc;
 	   
 	 }
 	 
-	 bool operator == ( const Kljuc& b) const 
+	 bool operator == ( const Kljuc<T>& b) const 
 	 {
 	   return _kljuc == b._kljuc;
 	   
 	 }
 	 
-	 bool operator != ( const Kljuc& b) const 
+	 bool operator != ( const Kljuc<T>& b) const 
 	 {
 	   return _kljuc != b._kljuc;
 	   

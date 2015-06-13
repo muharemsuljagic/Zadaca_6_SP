@@ -4,11 +4,72 @@
 #include<iostream>
 
 template <typename T>
-class binTree
+class binTree 
 {
- 
+    private:
+  
+    struct Node
+  {
+    T info;
+    Node * _left;
+    Node * _right;
+
+    Node():_left(nullptr),_right(nullptr){}
+    Node(const T& el):info(el),_left(nullptr),_right(nullptr){}
+    Node(const T& el, const Node * &l, const Node * &r):info(el),_left(l),_right(r){}
+    const Node* getLeft() const{return _left;} 
+    const Node* getRight() const{return _right;}
+  };
+  
+  Node * _root;
+  int _size;
+  
+  void printTree (const Node* ) const;
+  Node* copyTree(const Node * const &);
+  
+  void destTree(Node* & root)
+  {
+    if(root != nullptr)
+    {
+      if(root->_left != nullptr)
+        destTree(root->_left);
+      
+      if(root->_right != nullptr)
+        destTree(root->_right);
+      
+      delete root;
+    }
+  }
+   
+  void deleteLeaf(Node* parent, Node * child)
+  {
+    if(parent == child)
+     _root = nullptr;
+    else if (parent -> _left == child)
+     parent -> _left = nullptr;
+    else
+     parent -> _right = nullptr;
+
+   delete child; 
+  }
+   
+   void deleteOneNpt(Node * parent, Node * child)
+   {
+     Node * next;
+     if(child -> _right == nullptr)
+       next = child -> _left;
+     else
+       next = child -> _right;
+     if(parent == child)
+       _root = next;
+     else if(parent -> _left == child )
+       parent -> _left = next;
+     else
+       parent -> _right = next;
+   }
+
+
     public:
-  struct Node;
   
   binTree():_root(nullptr),_size(0){}
   binTree(const binTree&);
@@ -16,40 +77,18 @@ class binTree
   binTree& operator = (const binTree&);
   binTree& operator = (binTree &&);
   ~binTree();
-  const Node* getRoot() const {return _root;} 
-
-  void freeTree();  
+  
   const int& size(){return _size;}
   bool empty (){return _size==0;}
   void print()const;  
   T* push(const T&);
   void deleteNode(const T& );
-  int numLeaf;    
-    
-    protected:
-  
-  void printTree (const Node* ) const;
-  Node* copyTree(const Node * const &);  
-  void destTree(Node*&);
-  void deleteLeaf(Node* , Node*);   
-  void deleteOneNpt(Node* , Node*);
   
   
-  
-  Node * _root;
-  int _size;
-
 };
+
 template<typename T>
 using nd=typename binTree<T>::Node;
-
-template <typename T>
-void binTree<T> :: freeTree ()
-{
-  destTree(_root);
-  _size=0;
-}
-
 
 template <typename T>
 void binTree<T> :: deleteNode (const T& el)
@@ -214,63 +253,5 @@ binTree<T>& binTree<T> :: operator = ( binTree<T>&& tree)
   tree._root=_root;
   _root = temp;
   return *this;
-}
-
-template<typename T>
-struct binTree<T>::Node
-{ 
-  public:
-  T info;
-  Node * _left;
-  Node * _right;
-
-  Node():_left(nullptr),_right(nullptr){}
-  Node(const T& el):info(el),_left(nullptr),_right(nullptr){}
-  Node(const T& el, const Node * &l, const Node * &r):info(el),_left(l),_right(r){}
-  const Node* getLeft() const{return _left;} 
-  const Node* getRight() const{return _right;}
-};
-
-template <typename T>
-void binTree<T> :: destTree(binTree<T> :: Node* & root)
-{
-  if(root != nullptr)
-  {
-    if(root->_left != nullptr)
-      destTree(root->_left);
-    
-    if(root->_right != nullptr)
-      destTree(root->_right);
-    
-    delete root;
-  }
-}
-template <typename T>
-void binTree<T> :: deleteLeaf(binTree<T>::Node* parent,binTree<T>::Node * child)
-{
-  if(parent == child)
-   _root = nullptr;
-  else if (parent -> _left == child)
-   parent -> _left = nullptr;
-  else
-   parent -> _right = nullptr;
-
- delete child; 
-}
-
-template <typename T>
-void binTree<T> :: deleteOneNpt(binTree<T>::Node * parent, binTree<T>::Node * child)
-{
- nd<T> * next;
- if(child -> _right == nullptr)
-   next = child -> _left;
- else
-   next = child -> _right;
- if(parent == child)
-   _root = next;
- else if(parent -> _left == child )
-   parent -> _left = next;
- else
-   parent -> _right = next;
 }
 #endif
