@@ -11,21 +11,30 @@ class Dionica
 	std::string _Sifra;
 	std::string _Naziv;
 	double _Cijena;
+	double _Ukupno;
+	double _Preostalo;
 
 	public:
 	
+	void setUkupno(int ukupno) { _Ukupno = ukupno;}
+	void setPreostalo(int preostalo) { _Preostalo = preostalo ; }
 	void setId( int Id) { _ID = Id;}
 	void setSifra(const std::string& sifra) { _Sifra = sifra ; }
 	void setNaziv( const std::string& naziv) { _Naziv = naziv;}
 	void setCijena( double cijena) { _Cijena = cijena ; }
 	
+	double getUkupno() { return _Ukupno;}
+	double getPreostalo() { return _Preostalo;}	
 	int getId() { return _ID; }
-	std::string getSifra() { return _Sifra;}
-	std::string getNaziv() { return _Naziv;}
+	const std::string getSifra() { return _Sifra;}
+	const std::string getNaziv() { return _Naziv;}
 	double getCijena() { return _Cijena;}
 	
 	Dionica() = default;
-	Dionica(int Id,const std::string& Sifra,const std::string& Naziv,double Cijena):_ID(Id),_Sifra(Sifra),_Naziv(Naziv),_Cijena(Cijena){}
+	Dionica(int Id,const std::string& Sifra,const std::string& Naziv,double Cijena,double Ukupno):_ID(Id),_Sifra(Sifra),_Naziv(Naziv),_Cijena(Cijena),_Ukupno(Ukupno)
+	{
+		_Preostalo = Ukupno;
+	}
 	
 	~Dionica()= default;
 

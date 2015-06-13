@@ -7,21 +7,27 @@ using namespace std;
 class korisnikDionica
 {
 private:
-    int idKorisnik;
-    int idDionice;
-    int brojDionica;
-    bool prodaja;
+    int _idKorisnik;
+    int _idDionice;
+   
+    int _brojDionica;
+    int _prodaja;
 
 public:
-    korisnikDionica(int id_kor, int id_dio, int broj, bool prod):idKorisnik(id_kor),idDionice(id_dio),brojDionica(broj),prodaja(prod)){};
+    
+    korisnikDionica(int id_kor, int id_dio, int broj, int prod):_idKorisnik(id_kor),_idDionice(id_dio),_brojDionica(broj),_prodaja(prod)){};
+    
     void setIDkorisnik(int id_kor);
     void setIDdionice(int id_dio);
     void setBrojDionica(int broj);
-    void setProdaja(bool prod);
+    void setProdaja(int prod);
+    
+    
     int getIDkorisnik();
     int getIDdionice();
     int getBrojDionica();
-    bool getProdaja();
+    int getProdaja() { return _prodaja;}
+    
     bool operator==(korisnikDionica korisnik);
     bool operator <( const korisnikDionica objekat) const;
     bool operator>( const korisnikDionica objekat) const;
@@ -29,76 +35,76 @@ public:
 
 void korisnikDionica::setIDkorisnik(int id_kor)
     {
-        idKorisnik=id_kor;
+        _idKorisnik=id_kor;
     }
 
 
 void korisnikDionica::setIDdionice(int id_dio)
     {
-        idDionice=id_dio;
+        _idDionice=id_dio;
     }
 
 
 void korisnikDionica::setBrojDionica(int broj)
     {
-        brojDionica=broj;
+        _brojDionica=broj;
     }
 
 
-void korisnikDionica::setProdaja(bool prod)
+void korisnikDionica::setProdaja(int prod)
     {
-        prodaja=prod;
+        _prodaja=prod;
     }
 
 
 int korisnikDionica::getIDkorisnik()
     {
-        return idKorisnik;
+        return _idKorisnik;
     }
 
 
 int korisnikDionica::getIDdionice()
     {
-        return idDionice;
+        return _idDionice;
     }
 
 
 int korisnikDionica::getBrojDionica()
     {
-        return brojDionica;
+        return _brojDionica;
     }
 
 
 bool korisnikDionica::getProdaja()
     {
-        return prodaja;
+        return _prodaja;
     }
 
 bool korisnikDionica::operator==(korisnikDionica korisnik)
     {
-        if(idKorisnik==korisnik.idKorisnik)
+        if(_idKorisnik==korisnik._idKorisnik && _idDionice == korisnik._idDionice)
             return true;
-        return false;
+	else return false;
 
     }
 
 bool korisnikDionica::operator<( const korisnikDionica objekat) const
 
 {
-    if ( idDionice ==  objekat.idDIonice)
-    return idKorisnik < objekat.idKorisnik;
+    if ( _idDionice ==  objekat._idiIonice)
+	return _idKorisnik < objekat._idKorisnik;
     else
-    return idDionice < objekat idDIonice;
+	return _idDionice < objekat._idDionice;
 
 }
 
 bool korisnikDionica::operator>( const korisnikDionica objekat) const
 
 {
-    if ( idDionice ==  objekat.idDIonice)
-    return idKorisnik > objekat.idKorisnik;
+    if ( _idDionice ==  objekat._idDionice)
+	return _idKorisnik > objekat._idKorisnik;
     else
-    return idDionice > objekat idDIonice;
+	return _idDionice > objekat._idDionice;
 }
 
 #endif // _korisnikDionica_hxx_
