@@ -4,35 +4,37 @@
 
 #include "bst2.hxx"
 #include <iostream>
-
+#include "kljuc.hxx"
 
 using namespace std;
 
-template<typename T>
-class bstkljuc : public binTree<T>
+//template<typename T>
+class bstkljuc : public binTree<Kljuc<string>>           //Kljuc<T>
 {
 	public:
 		
-	void push(const T&,int);
+	void push(const string&,int);                    // push(const T&,int)
 	
 	
 	
 };
 
-template <typename T>
-void bstkljuc::push (const T& el,int id)
+
+//template <typename T>
+void bstkljuc::push (const string& el,int id)
 {
 
   if (empty())
   {
-    _root=new typename binTree<T>::Node(el);
+      Kljuc<string> temp(el,id);
+    _root=new binTree<Kljuc<string>>::Node(temp);
     ++ _size;
     return &(_root->info);
     
   }
   
-  nd<T>* curNode=_root;
-  nd<T>* prevNode;
+  binTree<Kljuc<string>>::Node* curNode=_root;     // binTree<Kljuc<T>>::Node
+  binTree<Kljuc<string>>::Node* prevNode;           // binTree<Kljuc<T>>::Node
   
   while (curNode != nullptr)
   {
@@ -40,7 +42,7 @@ void bstkljuc::push (const T& el,int id)
     if(curNode->info == el)
     {
       //ako nadje korisnika sa istim imenom, samo doda  ID u listuId.
-      // curNode->info.dodajId(id);      
+      curNode->info.dodajId(id);      
       return &(curNode->info);    
     }
     if(curNode->info < el)
@@ -48,7 +50,10 @@ void bstkljuc::push (const T& el,int id)
     else
       curNode=curNode->_left;
   }
-  nd<T> * newnd = new nd<T>(el);
+  
+  //Provjeriti ovaj dio.. 
+  Kljuc<string> temp(el,id);
+  binTree<Kljuc<string>>::Node* newnd = new binTree<Kljuc<string>>::Node(temp);  // binTree<Kljuc<T>>::Node
   if(prevNode->info < el)
     prevNode->_right=newnd;
   else
@@ -56,4 +61,4 @@ void bstkljuc::push (const T& el,int id)
   ++_size;
   return &(newnd->info);
 }
-
+*/

@@ -48,13 +48,14 @@ class Kljuc
 	 }
 	
 };
-
-void Kljuc::ispisiId() const
+template<typename T>
+void Kljuc<T>::ispisiId() const
 {
 	listaid.print();
 }
 
-void Kljuc::dodajId(int Id) 
+template<typename T>
+void Kljuc<T>::dodajId(int Id) 
 {
 	listaId.insert(Id)
 }
