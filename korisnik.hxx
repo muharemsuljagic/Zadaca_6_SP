@@ -62,7 +62,7 @@ class Korisnik
 
 std::ostream& operator << (std::ostream& izlaz, const Korisnik& a)
 {
-		izlaz << a.getIme() <<" " <<a.getPrezime()<<"." << endl;
+		izlaz << a.getIme() <<"  " <<a.getPrezime()<<"." << endl;
 		izlaz <<"ID: " << a.getId()"."<<endl;
 		izlaz <<"Balans: " <<getBalans() << endl;
 		return izlaz;

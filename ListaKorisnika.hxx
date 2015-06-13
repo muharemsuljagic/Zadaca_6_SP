@@ -17,11 +17,10 @@ class ListaKorisnika
 	public:
 	ListaKorisnika()=default;
 	
+	
 	Korisnik* dodajKorisnika(Korisnik&);
 
-	void ispisiKorisnike() const;
-	// operator << 
-	// potrebno je dodati i BST sa kljucem, i JP listom za id i tu listu dodati kad dodamo i u listu korisnika. 
+	void ispisiKorisnike() const;	
 
 };
 
