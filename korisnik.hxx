@@ -56,9 +56,16 @@ class Korisnik
 	    return ( _ID!=b._ID || _Ime!=b._Ime || _Prezime!=b._Prezime || _Balans!=b._Balans || _Adresa!=b._Adresa || _eMail!=b._eMail || _tel!=b._tel);  
 	 }
 	 
-	 
+	 friend std::ostream& operator << ( std::ostream&,const Korisnik&);
 	 
 };
 
+std::ostream& operator << (std::ostream& izlaz, const Korisnik& a)
+{
+		izlaz << a.getIme() <<"  " <<a.getPrezime()<<"." << endl;
+		izlaz <<"ID: " << a.getId()"."<<endl;
+		izlaz <<"Balans: " <<getBalans() << endl;
+		return izlaz;
+}
 
 #endif

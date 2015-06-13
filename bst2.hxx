@@ -83,7 +83,8 @@ class binTree
   void print()const;  
   T* push(const T&);
   void deleteNode(const T& );
-  int numLeaf;
+  
+  
 };
 
 template<typename T>
