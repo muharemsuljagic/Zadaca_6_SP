@@ -14,14 +14,16 @@ class Kljuc
 	sortiranaLista<int> listaId;
 		
 	public:
-	Kljuc()=default;
-	Kljuc(const T& key,int a):_kljuc(key){listaId.dodajId(a);}
+	void ispisiId() const;
+	void dodajId(int);
+	
+  Kljuc()=default;
+	Kljuc(const T& key,int a):_kljuc(key){dodajId(a);}
 	
 	const T getKljuc() { return _kljuc;}
 	void setKljuc(const T& key) {_kljuc = key;}	
 	
-	void ispisiId() const;
-	void dodajId(int);
+  const sortiranaLista<int>& getListaId (); 
 	
 	 bool operator > ( const Kljuc& b) const 
 	 {
@@ -49,14 +51,22 @@ class Kljuc
 	
 };
 
-void Kljuc::ispisiId() const
+template <typename T>
+const sortiranaLista<int>& Kljuc<T>::getListaId ()
 {
-	listaid.print();
+  return listaId;
 }
 
-void Kljuc::dodajId(int Id) 
+template <typename T>
+void Kljuc<T>::ispisiId() const
 {
-	listaId.insert(Id)
+	listaId.print();
+}
+
+template <typename T>
+void Kljuc<T>::dodajId(int Id) 
+{
+	listaId.insert(Id);
 }
 
 #endif

@@ -2,7 +2,7 @@
 #define _SORTIRANA_LISTA_ZADATAK_2_H_
 
 #include<iostream>
-#include "lista_zadatak_2.hxx"
+#include "lista.hxx"
 #include <stdexcept>
 
 template <typename T>

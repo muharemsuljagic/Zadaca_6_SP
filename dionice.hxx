@@ -6,6 +6,8 @@
 #include "binTreeID.hxx"
 #include <fstream>
 #include <string>
+#include "Kljuc.hxx"
+#include "bstkljuc.hxx"
 
 class Dionice 
 {
@@ -20,16 +22,44 @@ class Dionice
     
    void ucitajIzFajla (const std::string&);
    void pisiUFajl (const std::string&);
-  
+   void traziPoNazivu (const std::string&);
   private:
     
     void ispisiOdCvora (std::ostream& ,const  binTreeId<Dionica> :: Node*) const;
+    Dionica* dodajDionicuSaId (Dionica& nova);
     
    
     int _idCounter;
     binTreeId<Dionica> _dionice;
+    bstkljuc<std::string> _poNazivu;      
     
 };
+
+void Dionice :: traziPoNazivu (const std::string& naziv)
+{
+  auto lista = _poNazivu.findByKey(naziv);
+  auto it=lista->begin();
+  while(it != lista->end())
+  {
+    cout<<*(_dionice.searchId(*it));
+    ++it;
+  }
+}
+
+Dionica* Dionice :: dodajDionicu (Dionica& nova)
+{
+  nova.setId(_idCounter);
+  ++_idCounter;
+  auto pok = _dionice.push(nova);
+  _poNazivu.push(pok->getNaziv(),pok->getId());
+  return pok;
+}
+Dionica* Dionice :: dodajDionicuSaId (Dionica& nova)
+{
+  auto pok = _dionice.push(nova);
+  _poNazivu.push(pok->getNaziv(),pok->getId());
+  return pok;
+}
 void Dionice :: ispisiOdCvora (std::ostream& o,const binTreeId<Dionica> :: Node* pok)const
 {
   if(pok -> _left == nullptr && pok->_right==nullptr)
@@ -48,8 +78,6 @@ void Dionice :: ispisiOdCvora (std::ostream& o,const binTreeId<Dionica> :: Node*
 
   if(pok -> _right != nullptr)
   { 
-    std::cout<<"-------------------------------\n\n\n------------------------------\n\n";
-    _dionice.print();
     ispisiOdCvora (o,pok->_right);
   }
 
@@ -89,26 +117,29 @@ void Dionice :: ucitajIzFajla (const std::string& filepath)
    auto f = [](int& i,std::string& value,std::string& input)-> void
    {
      auto s=input.size();
-     std::cout<<"---"<<value<<std::endl;
      while (input[i] != ',' && i<s)
      {
        value.push_back(input[i]);
        ++i;
      }
-     std::cout<<"----"<<value<<" //"<<std::endl;
      ++i;
    };
    
    
    getline(myf,input);
-   
+   int newid;
    while(!myf.eof())
    {
      value="";
      Dionica temp;
      i=0;
      f(i,value,input);
-     temp.setId(std::stoi(value));
+     newid = std::stoi(value);
+     temp.setId(newid);
+     if(newid > id)
+     {
+       id=newid;
+     }
      value="";
      f(i,value,input);
      temp.setSifra(value);
@@ -124,9 +155,11 @@ void Dionice :: ucitajIzFajla (const std::string& filepath)
      value="";
      f(i,value,input);
      temp.setPreostalo(stoi(value));
-     _dionice.push(temp);
+     dodajDionicuSaId(temp);
      getline(myf,input);
    } 
+
+   _idCounter=id;
   }
   else
   {
