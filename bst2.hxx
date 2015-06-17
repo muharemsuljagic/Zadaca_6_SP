@@ -17,7 +17,8 @@ class binTree
   binTree& operator = (binTree &&);
   ~binTree();
   const Node* getRoot() const {return _root;} 
-
+  int* binTree<korisnikDionica>::pushKorisnik (const korisnikDionica& el);
+  korisnikDionica pretragaKorisnika(const int & idKorisnik, const int & idDionica) const;
   void freeTree();  
   const int& size(){return _size;}
   bool empty (){return _size==0;}
@@ -49,6 +50,64 @@ void binTree<T> :: freeTree ()
   destTree(_root);
   _size=0;
 }
+
+template<typename T>
+korisnikDionica binTree<korisnikDionica>::pretragaKorisnika(const int & idKorisnik, const int & idDionica) const{ //metod za pretragu kornika sa odreðenim ID-om i ID-om dionice
+	binTree<korisnikDionica> *current; //pomocni pokazivac za kretanje po stablu
+	
+	if (this->root == NULL)   
+		cout << "Stablo prazno!" << endl;
+	else
+	{
+		current = this->root; 
+		while (current != NULL)  
+		{
+			if ((current->info).getIdKorisnik == idKorisnik && (current->info).getIdDionica == idDionica) 
+				return current->info;
+			else if ((current->info).getIdKorisnik > idKorisnik)
+				current = current->_left;
+			else
+				current = current->_right; //ako nije ni jednak ni veci, pomjeri se u desno podstablo
+		}
+	}
+	return NULL;
+} 
+
+
+template<typename T>
+int* binTree<korisnikDionica>::pushKorisnik (const korisnikDionica& el) //metod za dodavanje korisnika dionica u bst
+{
+
+  if (empty())
+  {
+    _root=new typename binTree<korisnikDionica>::Node(el);
+    ++ _size;
+    return &((_root->info).getIdKorisnik);
+    
+  }
+  
+  nd<korisnikDionica>* curNode=_root;
+  nd<korisnikDionica>* prevNode;
+  
+  while (curNode != nullptr)
+  {
+    prevNode = curNode;
+    if((curNode->info).getIdKorisnik == el.getIdKorisnik)
+        return &((curNode->info).getIdKorsnik);
+    if((curNode->info).getIdKorsnik < el.getIdKorisnik)
+      curNode=curNode->_right;
+    else
+      curNode=curNode->_left;
+  }
+  nd<korisnikDionica> * newnd = new nd<korisnikDionica>(el);
+  if((prevNode->info).getIdKorsnik < el.getIdKorisnik)
+    prevNode->_right=newnd;
+  else
+    prevNode->_left = newnd;
+  ++_size;
+  return &((newnd->info).getIdKorsinik);
+}
+
 
 
 template <typename T>
