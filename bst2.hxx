@@ -17,8 +17,6 @@ class binTree
   binTree& operator = (binTree &&);
   ~binTree();
   const Node* getRoot() const {return _root;} 
-  int* binTree<korisnikDionica>::pushKorisnik (const korisnikDionica& el);
-  korisnikDionica pretragaKorisnika(const int & idKorisnik, const int & idDionica) const;
   void freeTree();  
   const int& size(){return _size;}
   bool empty (){return _size==0;}
@@ -26,7 +24,11 @@ class binTree
   T* push(const T&);
   void deleteNode(const T& );
   int numLeaf;    
-    
+  T* search (const T&);
+
+  template <typename U>
+    void forEach (const U &)const;
+  
     protected:
   
   void printTree (const Node* ) const;
@@ -35,6 +37,8 @@ class binTree
   void deleteLeaf(Node* , Node*);   
   void deleteOneNpt(Node* , Node*);
   
+  template <typename U>
+    void forEachFromNode(const U&, Node*)const;
   
   
   Node * _root;
@@ -44,71 +48,57 @@ class binTree
 template<typename T>
 using nd=typename binTree<T>::Node;
 
+template<typename T>
+template<typename U>
+void binTree<T> :: forEachFromNode(const U& f, binTree<T>::Node * root)const
+{
+  if (root -> _left != nullptr)
+  {
+    forEachFromNode(f,root -> _left);
+  }
+
+  f(root -> info);
+
+  if (root -> _right != nullptr)
+  {
+    forEachFromNode(f,root -> _right);
+  }
+} 
+
+
+template<typename T>
+template<typename U>
+void binTree<T> :: forEach(const U& f)const
+{
+  forEachFromNode (f,_root);
+}
+
+template <typename T>
+T* binTree<T> :: search (const T& el)
+{
+     if (this->_root == nullptr)
+       return nullptr;
+
+     typename binTree :: Node * current = this->_root;
+     
+     while(current != nullptr)
+     {
+       if(current->info==el)
+         return &(current->info);
+       if(current->info< el)
+        current=current-> _right;
+       else
+        current = current -> _left; 
+     }
+     return nullptr;  
+} 
+
 template <typename T>
 void binTree<T> :: freeTree ()
 {
   destTree(_root);
   _size=0;
 }
-
-template<typename T>
-korisnikDionica binTree<korisnikDionica>::pretragaKorisnika(const int & idKorisnik, const int & idDionica) const{ //metod za pretragu kornika sa odreðenim ID-om i ID-om dionice
-	binTree<korisnikDionica> *current; //pomocni pokazivac za kretanje po stablu
-	
-	if (this->root == NULL)   
-		cout << "Stablo prazno!" << endl;
-	else
-	{
-		current = this->root; 
-		while (current != NULL)  
-		{
-			if ((current->info).getIdKorisnik == idKorisnik && (current->info).getIdDionica == idDionica) 
-				return current->info;
-			else if ((current->info).getIdKorisnik > idKorisnik)
-				current = current->_left;
-			else
-				current = current->_right; //ako nije ni jednak ni veci, pomjeri se u desno podstablo
-		}
-	}
-	return NULL;
-} 
-
-
-template<typename T>
-int* binTree<korisnikDionica>::pushKorisnik (const korisnikDionica& el) //metod za dodavanje korisnika dionica u bst
-{
-
-  if (empty())
-  {
-    _root=new typename binTree<korisnikDionica>::Node(el);
-    ++ _size;
-    return &((_root->info).getIdKorisnik);
-    
-  }
-  
-  nd<korisnikDionica>* curNode=_root;
-  nd<korisnikDionica>* prevNode;
-  
-  while (curNode != nullptr)
-  {
-    prevNode = curNode;
-    if((curNode->info).getIdKorisnik == el.getIdKorisnik)
-        return &((curNode->info).getIdKorsnik);
-    if((curNode->info).getIdKorsnik < el.getIdKorisnik)
-      curNode=curNode->_right;
-    else
-      curNode=curNode->_left;
-  }
-  nd<korisnikDionica> * newnd = new nd<korisnikDionica>(el);
-  if((prevNode->info).getIdKorsnik < el.getIdKorisnik)
-    prevNode->_right=newnd;
-  else
-    prevNode->_left = newnd;
-  ++_size;
-  return &((newnd->info).getIdKorsinik);
-}
-
-
 
 template <typename T>
 void binTree<T> :: deleteNode (const T& el)
