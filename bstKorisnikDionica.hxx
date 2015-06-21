@@ -25,6 +25,12 @@ public:
        const sortiranaLista<int>* nadjiKorisnike (const int&);
        const sortiranaLista<int>* nadjiDionice (const int&); 
        korisnikDionica* nadjiVezu (const int&, const int&); 
+       void ocisti ()
+       {
+         niz.freeTree();
+         _idKorisnika.freeTree();
+         _idDionice.freeTree();
+       }
 };
 void bstKorisnikDionica::ispisiOdCvora(std::ostream& o,const binTree<korisnikDionica> :: Node* root) const
 {

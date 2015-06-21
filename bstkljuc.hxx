@@ -25,7 +25,7 @@ const sortiranaLista<int>* bstkljuc<T> :: findByKey(const T& el)const
   while(cur != nullptr)
   {
     if ((cur->info).getKljuc() == el)
-      return &((cur->info).getListaId());
+      return ((cur->info).getListaId());
     if ((cur->info).getKljuc() < el)
       cur = cur -> _right;
     else

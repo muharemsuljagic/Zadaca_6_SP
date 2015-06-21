@@ -23,7 +23,7 @@ class Kljuc
 	const T getKljuc() { return _kljuc;}
 	void setKljuc(const T& key) {_kljuc = key;}	
 	
-  const sortiranaLista<int>& getListaId (); 
+  const sortiranaLista<int>* getListaId ()const; 
 	
 	 bool operator > ( const Kljuc& b) const 
 	 {
@@ -52,9 +52,9 @@ class Kljuc
 };
 
 template <typename T>
-const sortiranaLista<int>& Kljuc<T>::getListaId ()
+const sortiranaLista<int>* Kljuc<T>::getListaId ()const
 {
-  return listaId;
+  return &listaId;
 }
 
 template <typename T>

@@ -15,7 +15,15 @@ class Dionica
 	int _Preostalo;
 
 	public:
-	
+  
+  void prodaj(const int& n)
+  {
+    if(n<=_Preostalo)
+    {
+      _Preostalo-=n;
+    }
+  }  
+
 	void setUkupno(int ukupno) { _Ukupno = ukupno;}
 	void setPreostalo(int preostalo) { _Preostalo = preostalo ; }
 	void setId( int Id) { _ID = Id;}
@@ -31,6 +39,10 @@ class Dionica
 	double getCijena() const{ return _Cijena;}
 	
 	Dionica() = default;
+	Dionica(const std::string& Sifra,const std::string& Naziv,double Cijena,int Ukupno):_ID(0),_Sifra(Sifra),_Naziv(Naziv),_Cijena(Cijena),_Ukupno(Ukupno)
+	{
+		_Preostalo = Ukupno;
+	}
 	Dionica(int Id,const std::string& Sifra,const std::string& Naziv,double Cijena,int Ukupno):_ID(Id),_Sifra(Sifra),_Naziv(Naziv),_Cijena(Cijena),_Ukupno(Ukupno)
 	{
 		_Preostalo = Ukupno;

@@ -1,0 +1,6 @@
+1,jmbg,ime,prezime,5000,adresa,email,062213279
+2,d2d2,2d2,d2d2,222,dwd,wdw,wdw
+3,jmbg2,ime,prezime2,5000,adresa,email,062213279
+4,jmbg,ime,prezime,5000,adresa,email,062213279
+5,d2d2,2d2,d2d2,222,dwd,wdw,wdw
+6,jmbg2,ime,prezime2,5000,adresa,email,062213279

@@ -8,22 +8,25 @@
 #include <string>
 #include "Kljuc.hxx"
 #include "bstkljuc.hxx"
-
 class Dionice 
 {
 
   public:
     Dionice() : _idCounter(1){}
     
-    Dionica* dodajDionicu (Dionica& nova);
-    Dionica* dodajDionicu (Dionica&& nova);
-    
+    Dionica* dodajDionicu (Dionica nova);
+    const binTreeId<Dionica>& getDionice()const{return _dionice;}
+    const bstkljuc<std::string>& getPoNazivu ()const {return _poNazivu;}
     Dionica* nadjiPoId (const int& id);
-    
-   void ucitajIzFajla (const std::string&);
-   void pisiUFajl (const std::string&);
-   void traziPoNazivu (const std::string&);
-  private:
+    void ucitajIzFajla (const std::string&);
+    void pisiUFajl (const std::string&);
+    const sortiranaLista<int>* traziPoNazivu (const std::string&);
+    void ocisti ()
+    {
+      _dionice.freeTree();
+      _poNazivu.freeTree();
+    }
+    private:
     
     void ispisiOdCvora (std::ostream& ,const  binTreeId<Dionica> :: Node*) const;
     Dionica* dodajDionicuSaId (Dionica& nova);
@@ -35,18 +38,13 @@ class Dionice
     
 };
 
-void Dionice :: traziPoNazivu (const std::string& naziv)
+
+const sortiranaLista<int>* Dionice :: traziPoNazivu (const std::string& naziv)
 {
-  auto lista = _poNazivu.findByKey(naziv);
-  auto it=lista->begin();
-  while(it != lista->end())
-  {
-    cout<<*(_dionice.searchId(*it));
-    ++it;
-  }
+  return  _poNazivu.findByKey(naziv);
 }
 
-Dionica* Dionice :: dodajDionicu (Dionica& nova)
+Dionica* Dionice :: dodajDionicu (Dionica nova)
 {
   nova.setId(_idCounter);
   ++_idCounter;
@@ -159,12 +157,17 @@ void Dionice :: ucitajIzFajla (const std::string& filepath)
      getline(myf,input);
    } 
 
-   _idCounter=id;
+   _idCounter=id+1;
   }
   else
   {
     throw std::string("Incorrect filepath\n");
   }
+}
+
+Dionica* Dionice :: nadjiPoId (const int& id)
+{
+  return _dionice.searchId(id);
 }
 #endif
 
